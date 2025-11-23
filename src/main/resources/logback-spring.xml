@@ -1,0 +1,33 @@
+<configuration scan="true" scanPeriod="120 seconds">
+    <property name="LOG_PATH" value="logs"/>
+    <property name="LOG_LEVEL" value="INFO"/>
+    <property name="PATTERN_LAYOUT"
+              value="%d{MM-dd HH:mm:ss.SSS} %-5p %logger{10}.%method:%line.[%X{uuid}] :: %m%n" />
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN_LAYOUT}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/cards-be.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/cards-be-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${PATTERN_LAYOUT}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.mb.cards" level="INFO">
+        <appender-ref ref="File"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="File"/>
+    </root>
+
+</configuration>
